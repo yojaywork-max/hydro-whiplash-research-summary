@@ -4,7 +4,7 @@ Whiplash, a newly coined term by climate scientist to refer to the quick transit
 
 The document aim to summarize how whiplash is calculated based on Tan's framework, and some revision that we propose for further study. 
 We will walk through the following sections:
-**Motivation of hydrological whiplash analysis, Tan's framework, Whiplash calculation under climate change trend, Our proposed revision** .
+**Core idea, Tan's framework, Whiplash calculation under climate change trend, Our proposed revision** .
 
 Data source in our analysis: **ERA5-land-only** 
 
