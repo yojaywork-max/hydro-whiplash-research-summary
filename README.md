@@ -31,11 +31,28 @@ Data source in our analysis: **ERA5-land-only**
 
 ## Tan's framework
 
-**1. Linearly detrend daily precipitation by annual sum, then calculate moving sum of detrended precipitation within 30 days**
+For a grid on the global map, we have the following four steps to identify the whiplah event on that grid. Abbbreviate precipitation as pr.
 
-**2. Calculate Standardized annual-cycle-removed cumulative precipitation anomalies $$P_{i,j}' = \frac{P_{i,j} - \overline{P_j}}{\sigma_j}$$**
+**1. Linearly detrend daily pr by annual sum, then calculate moving sum of detrended pr within 30 days**
+
+- Sum up the daily pr into annual pr, then fit a linear relationship y = ax + b, where y = annual pr  and x = year. For example, we use the pr data from 1979 to 2019, so we have 41 years of annual pr (y) that corresponds to each year (x).
+- The detrended daily pr is the original pr subtracted by the annualy trended pr. For example at 2000 Jan 1st, the detrended pr is the pr at 2000 Jan. 1st minus the annual pr of 2001.
+- For each daily pr, caluclate the 30-days ( 15 days before and 15 days after ) cumulative detrended pr, denoted as $$P_{i,j}$$, where i, j represent the i-th year and j-th julian day, respectively.
+
+
+**2. Calculate Standardized annual-cycle-removed cumulative pr anomalies $$P_{i,j}' = \frac{P_{i,j} - \overline{P_j}}{\sigma_j}$$, where $$\overline{P_j}$$ and $$\sigma_j$$ is the mean and standard deviation of j-th julian day over the period.**
+
+For example, $P_{2001,1}' = \frac{P_{2001,1} - \overline{P_1}}{\sigma_1}$, where $\overline{P_1} = \sum\limits_{i = 1979}^{2019} P_{i, 1}$ and $\sigma_1 = \sqrt{\sum\limits_{i = 1979}^{2019} (P_{i, 1} - \overline{P_1})^2}$
+
 
 **3. Identify wet and dry extremes**
+- Let $q_{upper}, q_{lower}$ be the threshold quantiles for wet and dry extremes respectively. Note that there are two sightly different ways of defining extremes:
+  - Thresholds based on the whole period:
+
+    This is the method proposed in Tan's paper. They aggregate the $P_{i, j}$ for all $i, j$, and then define those anomalies that are larger than $q_{upper}$ as wet events and those anomalies that are lower than $q_{lower}$ as dry events.
+
+  - Thresholds based on each julian day:
+    This is an alternative method. For each julian day, define its own upper and lower thresholds. This method consider the information of seasonal variability.
 
 **4. Identify whiplash, both Dry-to-Wet and Wet-to-Dry**
 
