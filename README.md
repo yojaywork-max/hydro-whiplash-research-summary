@@ -56,6 +56,10 @@ For example, $P_{2001,1}' = \frac{P_{2001,1} - \overline{P_1}}{\sigma_1}$, where
   - Thresholds based on each julian day:
     This is an alternative method. Instaed of identifying extremes for the whole period, we propose to consider the seasonal variability: For each julian day, define its own upper and lower thresholds, then extremes identifies are based on the historical of the julian day.
 
+![alt text](https://github.com/yojaywork-max/hydro-whiplash-research-summary/blob/main/images/combine.png?raw=true)
+
+![alt text](https://github.com/yojaywork-max/hydro-whiplash-research-summary/blob/main/images/seperate.png?raw=true)
+
 **4. Identify whiplash, both Dry-to-Wet and Wet-to-Dry**
 
 
