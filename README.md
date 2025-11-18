@@ -49,7 +49,9 @@ For example, $P_{2001,1}' = \frac{P_{2001,1} - \overline{P_1}}{\sigma_1}$, where
 - Let $q_{upper}, q_{lower}$ be the threshold quantiles for wet and dry extremes respectively. Note that there are two sightly different ways of defining extremes:
   - Thresholds based on the whole period:
 
-    This is the method proposed in Tan's paper. They aggregate the $P_{i, j}$ for all $i, j$, and then define those anomalies that are larger than $q_{upper}$ as wet events and those anomalies that are lower than $q_{lower}$ as dry events.
+    This is the method proposed in Tan's paper. They aggregate the $P_{i, j}'$ for all $i, j$, and then define those anomalies that are larger than $q_{upper}$ as wet events and those anomalies that are lower than $q_{lower}$ as dry events.
+
+    There is one issue to discuss here. Since the variation of pr can differ significantly between wet and dry season of that grid, identifying extremes based on the whole period anomailes could result in bias. For example, consider a case that during the wet seasons, the $P_{i, j}'s$ are left-skewed and during the dry seasons, the  $P_{i, j}'s$ are right-skewed. If we identify extremes combining wet and dry seasons, most wet extremes will locate in wet seasons and dry extremes in dry seasons.
 
   - Thresholds based on each julian day:
     This is an alternative method. For each julian day, define its own upper and lower thresholds. This method consider the information of seasonal variability.
