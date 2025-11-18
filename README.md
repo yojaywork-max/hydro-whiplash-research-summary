@@ -51,10 +51,10 @@ For example, $P_{2001,1}' = \frac{P_{2001,1} - \overline{P_1}}{\sigma_1}$, where
 
     This is the method proposed in Tan's paper. They aggregate the $P_{i, j}'$ for all $i, j$, and then define those anomalies that are larger than $q_{upper}$ as wet events and those anomalies that are lower than $q_{lower}$ as dry events.
 
-    There is one issue to discuss here. Since the variation of pr can differ significantly between wet and dry season of that grid, identifying extremes based on the whole period anomailes could result in bias. For example, consider a case that during the wet seasons, the $P_{i, j}'s$ are left-skewed and during the dry seasons, the  $P_{i, j}'s$ are right-skewed. If we identify extremes combining wet and dry seasons, most wet extremes will locate in wet seasons and dry extremes in dry seasons.
+    > **_NOTE:_** There is one issue to discuss here. Since the variation of pr can differ significantly between wet and dry season of that grid, identifying extremes based on the whole period anomailes could result in bias. For example, consider a case that during the wet seasons, the $P_{i, j}'s$ are left-skewed and during the dry seasons, the  $P_{i, j}'s$ are right-skewed. If we identify extremes combining wet and dry seasons, most wet(dry) extreme events identifies are in wet(dry) seasons. However, what we wish to identify from a climatology perspective includes the relative wets in dry seasons and relative dries in wet seasons. Hence, a revision of the identification is proposed, see next bullet point.
 
   - Thresholds based on each julian day:
-    This is an alternative method. For each julian day, define its own upper and lower thresholds. This method consider the information of seasonal variability.
+    This is an alternative method. Instaed of identifying extremes for the whole period, we propose to consider the seasonal variability: For each julian day, define its own upper and lower thresholds, then extremes identifies are based on the historical of the julian day.
 
 **4. Identify whiplash, both Dry-to-Wet and Wet-to-Dry**
 
