@@ -108,17 +108,65 @@ Under the background of climate change, distribution of variables like precipita
 When the variable variates larger than before, it logically follows that more extremes will be identified, and hence a higher whiplash frequency. 
 However, we argue that in our hydrological whiplash analysis, we want to avoid this increasing whiplash frequency that is contributed by the trending of precipitation. Otherwise, we may directly study the chnage of distribution of precipitation. 
 
-Instead, what we wish to shed light on is the extremes getting closer. A way to analyze is to make sure the amount of extremes to be the same over the period of study.
+Instead, what we wish to shed light on is the extremes getting closer. A way to analyze is to make sure the amount of extremes to be the same over the period of study. Therefore, here we build an idealized model where proportions(amount) of extremes are given as one of the inputs. See the following subsections.
+
+**Example code for counting Wet-to-Dry in the idealized model**
+
+```python
+ 1  import numpy as np
+ 2  p_wet, p_dry = 0.1, 0.1
+ 3  n_total = 1500
+ 4  n_wet = int( np.round(n_total*p_wet, 0))
+ 5  n_dry = int( np.round(n_total*p_dry, 0))
+ 6  n_non = n_total - n_wet - n_dry
+ 7  Nums = np.array([1]*n_wet + [-1]*n_dry + [0]*n_non)
+ 8
+ 9  np.random.shuffle(Nums)                             # randomly shuffle
+10
+11  wet_i = np.where(Nums == 1)[0]
+12  dry_i = np.where(Nums == -1)[0]
+13  inter_period = 5
+14
+15  WD = dict()         # wet: keys, dry: values
+16  for w in wet_i:
+17      for d in dry_i:
+18          if 0 < d - w <= inter_period:
+19              if d in list(WD.values()):              ## then we need to update new wet
+20                  w0 = list(WD)[-1]
+21                  del WD[w0]                          # to prevent repetetive couting wets
+22                  WD[w] = d
+23              else:                                   
+24                  WD[w] = d                           ## or directly stores whiplash
+25
+26              break                                   # to prevent repetetive couting dries
+27          if d-w > inter_period:
+28              break
+29 print('Wet-to-Dry frequency: ', len(WD) / n_total)
+```
+> **_Explanation of the code:_** This model assumes there are in total 1500 days and the upper and lower thresholds are given as 90% and 10%, so p_wet, meaning the proportion of wet extremes, is 1 - 90% = 0.1; and p_dry is 0.1 . Thus, there are 1500*0.1 = 150 wets and dries each. Next, we generate a time series contain those wets and dries, indexed as 1 and -1, with the rest being normal days (indexed as 0). Then we shuffle it to make the time series random. Lastly we start to calculate the whiplash events with a given inter_period. Note that for Dry-to-Wet whiplash, the logic for identification is same.
 
 
+**Results of the relationship of extreme proportions and inter_days on whiplash frequecy**
 
-**Set-up**
+To investigate the relationship of extreme event proportions and whiplash frequency, we run this idealized model with different values of p_wet and p_dry. Currently we take the p_wet and p_dry to be identical, assuming both extremes increase or decrease toghether at the same direction and rate.
 
-**Result**
+Since inter_period may also affect the counts of whiplash, for example shorter inter_period makes the whiplash frequency smaller, we also feed different values of inter_period into the model. For each p_wet, p_dry and inter_period, we run the model for 100 times and then average the 100 results to plot the following figure.
 
-**Discussion under climate change trending**
+![alt text](images/ideal_model.png)
+
+標題錯字要改、colormap、levels 選個清楚好看些的
+
+**Discussion**
+- 關於 thresholds based on whole period or thresholds based on each DoY：因為ideal model裡沒有季節性資訊，二者幾乎等價。
+- inter_period取至一定的長度後會飽和，whiplash freq不再增加，且whiplash freq ~= p_wet or p_dry
+- 寫如何看這張圖：使用一個fixed threshold，當extreme數量變多或變少（x軸往右走 or x軸往左走），可以對應到idealized model所模擬出的whiplash freq。
+如果extreme amounts + s% => whiplash freq + s%
+- 統計檢定：（不考慮季節性變化）
 
 **Adding autoregressive propoerty(future work)**
+- 在generate random time series時，加入大氣記憶性的性質。在不同的記憶性強度下，算出的whiplash也會不同
+- 想清楚這邊加入記憶性後要不要做merging? 做：當作是rough extreme 不做：當作是independent（不過這樣還有所謂的記憶性嗎？）
+
 
 ## Our proposed revision
 - Thresholds calculated for each day of year (DoY) rather than threshold for the whole period anomalies: to remove seasonal information.
