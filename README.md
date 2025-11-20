@@ -2,24 +2,27 @@
 A summary of my study on hydrological whiplashes.
 Whiplash, a newly coined term by climate scientist to refer to the quick transition from one extreme to the other. This project focuses on hydrological whiplash, which in this case we are looking at quick Dry-to-Wet or Wet-to-Dry event. We learn from the method of the paper: [Increasing global precipitation whiplash due to anthropogenic greenhouse gas emissions(Tan et al., 2023)](https://doi.org/10.1038/s41467-023-38510-9)
 
-The document aim to summarize how whiplash is calculated based on Tan's framework, and some revision that we propose for further study. 
+The document aims to summarize how whiplash is calculated based on Tan's framework, and some revision that we propose for further study. 
 We will walk through the following sections:
 **Core idea, Tan's framework, Whiplash calculation under climate change trend, Our proposed revision** .
 
-Data source in our analysis: **ERA5-land-only** 
+Data in our analysis: **ERA5-land-only** 
 
 
-## Core idea of this hydrological whiplash analysis
+## Core idea and setting of this hydrological whiplash analysis
+
+- Structure of whiplash. A whiplash includes
+  - Extremes on both sides. Eg: dry and wet
+  - Fast transition. In practice, we set a maximum days between one extreme to the other.
+    
+  In the study of whiplash, we are looking at the fast transition from one extreme to the opposite extreme; hence before studying whiplash, we should define what extreme is and set a suitable timescale of whiplash. In our study, we define extreme from a climatological perspective and the timescale of extremes and whiplash are subseasonal. This section will discuss about the details.
+
 
 - Motivation of moving sum on daily precipitation:
 
   Roughly speaking by a water resource perspective, a few days of dry or precipitation doesn't cause severe issue to the reservoir water levels, while one or a few months of dry condition can result in serious problems in water resources and thus affect our daily lives.
 
-  Also, if looking at the daily precipitation of an area, we may notice that there are a lot of zero precipitations. This characteristic makes it hard to conduct statitical analysis on a daily basis. By cumulating 30 days of precipitation centered at each day, we can remove this technical zero-padded issue.
-
-- Structure of whiplash
-  - extremes
-  - fast transition
+  Also, if looking at the daily precipitation of an area, for example at the subtropical regions,we may notice that there are a lot of zero precipitations. This characteristic makes it hard to conduct statitical analysis on a daily basis. By first cumulating 30 days of precipitation centered at each day, we can remove this zero-padded data issue.
 
 - From a climatology perspective
 
@@ -88,11 +91,19 @@ For example, $P_{2001,1}' = \frac{P_{2001,1} - \overline{P_1}}{\sigma_1}$, where
   9            break                                                                               # avoid repetitive counting for same wet in Wet-to-Dry
   ```
 
-  > **_Explanation of the code:_** For each independent wet event, if there exists a dry event where its first day is within inter_period days from the last day of the wet event, then identify this pair of wet and dry as a Wet-toDry. Note that we require every wet and dry in each Wet-toDry event to be unique, so line 5 and line 9 were written to avoid repetitive counting issue.
+  > **_Explanation of the code:_** For each independent wet event, if there exists a dry event where its first day is within inter_period days from the last day of the wet event, then identify this pair of wet and dry as a Wet-to-Dry. Note that we require every wet and dry in each Wet-to-Dry event to be unique, so line 5 and line 9 were written to avoid repetitive counting issue.
 
-## Whiplash calculation under climate change trend
+## An idealized model
 
-- An idealized model
+Now we discuss this idealized model to discuss a proper method to analyze whiplash under climate change trending. This idealized model 
+
+**Set-up**
+
+**Result**
+
+**Discussion under climate change trending**
+
+**Adding autoregressive propoerty(future work)**
 
 ## Our proposed revision
 - Thresholds calculated for each day of year (DoY) rather than threshold for the whole period anomalies: to remove seasonal information.
