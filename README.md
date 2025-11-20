@@ -95,7 +95,22 @@ For example, $P_{2001,1}' = \frac{P_{2001,1} - \overline{P_1}}{\sigma_1}$, where
 
 ## An idealized model
 
-Now we discuss this idealized model to discuss a proper method to analyze whiplash under climate change trending. This idealized model 
+Now we study an idealized model to discuss a proper method to analyze whiplash under climate change trending. Recall that to whiplash includes extremes and fast transition between extremes. An increase frequency in whiplash is resulted from two factors: **1. Increase amounts of extremes 2. Extremes on both side getting closer.**
+
+**Motivation**
+
+
+Probability speaking, if there are more extreme events on both sides during a fixed length of period, then there is certainly higher whiplash frequency. 
+
+What causes the extremes to increase?
+Under the background of climate change, distribution of variables like precipitation may change in different ways at different timescales. For example, mean of precipitation can increase or decrease; and the variation of precipitation can increase or decrease too. Note that a change in mean precipitation doesn't necessarily imply a change in variation, and vice versa. 
+
+When the variable variates larger than before, it logically follows that more extremes will be identified, and hence a higher whiplash frequency. 
+However, we argue that in our hydrological whiplash analysis, we want to avoid this increasing whiplash frequency that is contributed by the trending of precipitation. Otherwise, we may directly study the chnage of distribution of precipitation. 
+
+Instead, what we wish to shed light on is the extremes getting closer. A way to analyze is to make sure the amount of extremes to be the same over the period of study.
+
+
 
 **Set-up**
 
