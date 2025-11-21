@@ -169,3 +169,7 @@ Since inter_period may also affect the counts of whiplash, for example shorter i
 
 
 ## Data analysis & results 
+
+**1. Reproduction of Tan's work with revision on identifying extremes**
+
+**2. Analysis of 1pc CO2 increaase per year for 150 years with a moving window of 40 years**
