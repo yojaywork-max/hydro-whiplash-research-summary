@@ -157,17 +157,15 @@ Since inter_period may also affect the counts of whiplash, for example shorter i
 標題錯字要改、colormap、levels 選個清楚好看些的
 
 **Discussion**
-- 關於 thresholds based on whole period or thresholds based on each DoY：因為ideal model裡沒有季節性資訊，二者幾乎等價。
-- inter_period取至一定的長度後會飽和，whiplash freq不再增加，且whiplash freq ~= p_wet or p_dry
-- 寫如何看這張圖：使用一個fixed threshold，當extreme數量變多或變少（x軸往右走 or x軸往左走），可以對應到idealized model所模擬出的whiplash freq。
-如果extreme amounts + s% => whiplash freq + s%
-- 統計檢定：（不考慮季節性變化）
+- Expected whiplash frequency is a function of inter_period. But when iner_period is longer than a certain days, which has a monotonic relationship to the inverse of p_wet/p_dry, whiplash frequency is unaffected by the choice of inter_period.
+- When we analyzing whiplash during a period with fixed thresholds, under the climate change trending, if there are +s% of extreme events on both sides, then there the whiplash frequency increases by s%.
+- Note that in this ideal scenario, no information of seasonals is added, so this ideal model is consistent with Tan's method of identifying extremes, which considers the anomalies of whole period. Another thing to note that is under no seasonal variability, the other method that we proposed is nearly equivalent to Tan's method. See **Tan's framework - 3. Identify wet and dry extremes**. 
+- This idealized model can also be used as a statistical test to check if extremes of both sides are significantly closer than being uniformly distributed. But agian note that this test makes sense  only for the method that identify extremes based on the whole period anomalies, see the discussion under **Tan's framework - 3. Identify wet and dry extremes**. 
+
 
 **Adding autoregressive propoerty(future work)**
-- 在generate random time series時，加入大氣記憶性的性質。在不同的記憶性強度下，算出的whiplash也會不同
-- 想清楚這邊加入記憶性後要不要做merging? 做：當作是rough extreme 不做：當作是independent（不過這樣還有所謂的記憶性嗎？）
+- When generating random time series, make it atuoregressive. So we can answer quesntion such as under different levels of memory, what is the expected whiplash frequency? And for each grid, find a way to estimate its level of memory to compare with this model.
+- Something to think about: Do we consider merging after generating(identifying) extreme in this model? If not, we are assuming extremes to be independent, and in this sense do we need to add this autoregressive propoerty? (need more reasoining)
 
 
-## Our proposed revision
-- Thresholds calculated for each day of year (DoY) rather than threshold for the whole period anomalies: to remove seasonal information.
-- Not fixing thresholds( calculate threshold using moving period?).
+## Data analysis & results 
