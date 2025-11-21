@@ -4,9 +4,9 @@ Whiplash, a newly coined term by climate scientist to refer to the quick transit
 
 The document aims to summarize how whiplash is calculated based on Tan's framework, and some revision that we propose for further study. 
 We will walk through the following sections:
-**Core idea, Tan's framework, Whiplash calculation under climate change trend, Our proposed revision** .
+**Core idea, Tan's framework, An idealized model, Data analysis & results** .
 
-Data in our analysis: **ERA5-land-only** 
+
 
 
 ## Core idea and setting of this hydrological whiplash analysis
@@ -172,4 +172,36 @@ Since inter_period may also affect the counts of whiplash, for example shorter i
 
 **1. Reproduction of Tan's work with revision on identifying extremes**
 
+- Data: **ERA5-land-only**
+
+- Reproduction: See the comparison below
+  ![alt text](images/comaprison_of_repro.png)
+  > **_NOTE:_** The plots on the left column are screenshot from the fig 6 and fig 7 of supplmentary document of Tan's paper, see [Tan's supplementary doc](https://static-content.springer.com/esm/art%3A10.1038%2Fs41467-023-38510-9/MediaObjects/41467_2023_38510_MOESM1_ESM.pdf) .
+  > The reproduction is quite successful in terms of global spatial patterns and scales of frequencies, except the north and middle east regions of the Dry-to-Wet whiplash.
+
+- Revision: Different from Tan's method, we calculate thresholds based on each day historical anomalies instaed of the whole period anomalies. (See **Tan's framework - 3. Identify wet and dry extremes**)
+
+- Results:
+
+frequency per year and trend of frequency:
+
+ | | Dry-to-Wet | Wet-to-Dry |
+| --- | --- | --- |
+| **frequency per year**| ![alt text](images/DW.png) | ![alt text](images/WD.png) |
+| **trend of frequency** | ![alt text](images/DW_trend.png) | ![alt text](images/WD_trend.png) | 
+
+ 
+ annual precipitation trend vs. extremes trend vs. whiplash trend (TBU)
+   
+
+
 **2. Analysis of 1pc CO2 increaase per year for 150 years with a moving window of 40 years**
+
+- Data: **150 years 1pct CO2 ESM**
+- Set-up:
+
+  Calculate whiplash with 40 years as a period and move 5 years one time. That is, the results include periods of 1850 ~ 1889, 1855 ~ 1894, 1860 ~ 1899, ... , 1960 ~ 1999. (in total 23 periods)
+
+- result:(global map of trend TBU)
+  ![alt text](images/global_ave_freq.png)
+  
