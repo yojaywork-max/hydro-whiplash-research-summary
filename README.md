@@ -170,7 +170,7 @@ Since inter_period may also affect the counts of whiplash, for example shorter i
 
 ## Data analysis & results 
 
-**1. Reproduction of Tan's work with revision on identifying extremes**
+### Reproduction of Tan's work with revision on identifying extremes**
 
 - Data: **ERA5-land-only**
 
@@ -195,18 +195,44 @@ frequency per year and trend of frequency:
    
 
 
-**2. Analysis of 1pc CO2 increaase per year for 150 years with a moving window of 40 years**
+### Analysis of 1pc CO2 increaase per year for 151 years using 1. fixed thresholds based on first 40 years and 2. thresholds calculated from a moving window of 40 years
 
 - Data: **150 years 1pct CO2 ESM**
-- Set-up:
+- methods of fixed or moving:
 
-  Calculate whiplash with 40 years as a period and move 5 years one time. That is, the results include periods of 1850 ~ 1889, 1855 ~ 1894, 1860 ~ 1899, ... , 1960 ~ 1999. (in total 23 periods)
+  - **Method 1 (fixed thresholds)**:
 
-- result:
-  
+    Set extreme thresholds based on the first 40 years and identify extremes and whiplash for the whole 151 years. This method is consistent to Tan's future scenario analysis.
 
-| Globally Averaged Frequency Time Series | Dry-to-Wet Trend | Wet-to-Dry Trend |
-| --- | --- | --- |
-| ![alt text](images/global_ave_freq.png) | ![alt text](images/1pc_CanESM_global_DW_trend.png) | ![alt text](images/1pc_CanESM_global_WD_trend.png) | 
+  - **Method 2(moving thresholds)**: 
 
- 
+    Calculate whiplash with 40 years as a period and move 5 years one time. That is, this includes periods of 1850 ~ 1889, 1855 ~ 1894, 1860 ~ 1899, ... , 1960 ~ 1999. (in total 23 periods). This method tries to tackle with the climate change distributive change of precipitation, so it calculates whiplash on a moving basis.
+
+  >Note: Here, both methods have been revised to consider seasonal variability of thresholds. (See 3. Identify wet and dry extremes**)
+
+
+- Results
+
+  - Method 1:
+
+    <div>
+
+    | Globally Averaged Frequency Time Series | Dry-to-Wet Trend | Wet-to-Dry Trend |
+    | --- | --- | --- |
+    | ![alt text](images/global_ave_freq_method_1.png) | ![alt text](images/1pc_CanESM_global_DW_trend_method_1.png) | ![alt text](images/1pc_CanESM_global_WD_trend_method_1.png) |
+
+    </div>
+
+  - Method 2:
+
+    <div>
+
+    | Globally Averaged Frequency Time Series | Dry-to-Wet Trend | Wet-to-Dry Trend |
+    | --- | --- | --- |
+    | ![alt text](images/global_ave_freq_method_2.png) | ![alt text](images/1pc_CanESM_global_DW_trend_method_2.png) | ![alt text](images/1pc_CanESM_global_WD_trend_method_2.png) |
+
+    </div>
+
+- Discussions:
+  - Strong trend in Method 1
+  - No trend in Method 2
