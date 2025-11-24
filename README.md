@@ -214,7 +214,7 @@ Since inter_period may also affect the counts of whiplash, for example shorter i
 
 ### Analysis of 1pc CO2 increaase per year for 151 years using 1. fixed thresholds based on first 40 years and 2. thresholds calculated from a moving window of 40 years
 
-- Data: **150 years 1pct CO2 ESM**
+- Data: **151 years 1pct CO2 ESM**
 - methods of fixed or moving:
 
   - **Method 1 (fixed thresholds)**:
