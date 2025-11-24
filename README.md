@@ -236,7 +236,7 @@ Since inter_period may also affect the counts of whiplash, for example shorter i
 
     | Globally Averaged Frequency Time Series | Dry-to-Wet Trend | Wet-to-Dry Trend |
     | --- | --- | --- |
-    | ![alt text](images/global_ave_freq_method_1.png) | ![alt text](images/1pc_CanESM_global_DW_trend_method_1.png) | ![alt text](images/1pc_CanESM_global_WD_trend_method_1.png) |
+    | <img src="images/global_ave_freq_method_1.png" height = "350"> | <img src="images/1pc_CanESM_global_DW_trend_method_1.png" height = "350"> | <img src="images/1pc_CanESM_global_WD_trend_method_1.png" height = "350"> |
 
     </div>
 
@@ -246,9 +246,10 @@ Since inter_period may also affect the counts of whiplash, for example shorter i
 
     | Globally Averaged Frequency Time Series | Dry-to-Wet Trend | Wet-to-Dry Trend |
     | --- | --- | --- |
-    | ![alt text](images/global_ave_freq_method_2.png) | ![alt text](images/1pc_CanESM_global_DW_trend_method_2.png) | ![alt text](images/1pc_CanESM_global_WD_trend_method_2.png) |
+    | <img src="images/global_ave_freq_method_2.png" height = "350"> | <img src="images/1pc_CanESM_global_DW_trend_method_2.png" height = "350"> | <img src="images/1pc_CanESM_global_WD_trend_method_2.png" height = "350"> |
 
     </div>
+
 
 - Discussions:
   - Strong trend in Method 1
