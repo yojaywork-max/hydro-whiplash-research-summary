@@ -202,6 +202,11 @@ frequency per year and trend of frequency:
 
   Calculate whiplash with 40 years as a period and move 5 years one time. That is, the results include periods of 1850 ~ 1889, 1855 ~ 1894, 1860 ~ 1899, ... , 1960 ~ 1999. (in total 23 periods)
 
-- result:(global map of trend TBU)
-  ![alt text](images/global_ave_freq.png)
+- result:
   
+
+| Globally Averaged Frequency Time Series | Dry-to-Wet Trend | Wet-to-Dry Trend |
+| --- | --- | --- |
+| ![alt text](images/global_ave_freq.png) | ![alt text](images/1pc_CanESM_global_DW_trend.png) | ![alt text](images/1pc_CanESM_global_WD_trend.png) | 
+
+ 
