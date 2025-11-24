@@ -152,8 +152,12 @@ To investigate the relationship of extreme event proportions and whiplash freque
 
 Since inter_period may also affect the counts of whiplash, for example shorter inter_period makes the whiplash frequency smaller, we also feed different values of inter_period into the model. For each p_wet, p_dry and inter_period, we run the model for 100 times and then average the 100 results to plot the following figure.
 
-  <div align="center">
-  <img src="images/ideal_model_ip_plot.png" width="85%">
+
+  <div>
+
+  | | | 
+  | --- | --- |
+  | <img src="images/ideal_model_ip_plot.png" height = "350"> | <img src="images/ideal_model_fp_plot.png" height="350">|
   </div>
 
 
