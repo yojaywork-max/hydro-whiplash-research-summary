@@ -183,15 +183,27 @@ Since inter_period may also affect the counts of whiplash, for example shorter i
 
 - Results:
 
-frequency per year and trend of frequency:
+  - Frequency per year:
 
- | | Dry-to-Wet | Wet-to-Dry |
-| --- | --- | --- |
-| **frequency per year**| ![alt text](images/DW.png) | ![alt text](images/WD.png) |
-| **trend of frequency** | ![alt text](images/DW_trend.png) | ![alt text](images/WD_trend.png) | 
+  <div>
 
+  | Dry-to-Wet | Wet-to-Dry |
+  | :---: | :---: | 
+  |  ![alt text](images/DW.png) | ![alt text](images/WD.png) |
+  
+  <div>
+
+  - Trend of frequency:
+  
+  <div>
+
+  | Dry-to-Wet | Wet-to-Dry |
+  | :---: | :---: | 
+  |![alt text](images/DW_trend.png) | ![alt text](images/WD_trend.png) | 
+
+  <div>
  
- annual precipitation trend vs. extremes trend vs. whiplash trend (TBU)
+- annual precipitation trend vs. extremes trend vs. whiplash trend (TBU)
    
 
 
