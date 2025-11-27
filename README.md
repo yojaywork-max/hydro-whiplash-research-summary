@@ -241,7 +241,7 @@ Since inter_period may also affect the counts of whiplash, for example shorter i
 
 ### AR(1) Model:
     
-  $X_t = \phi X_{t-1} + \epsilon,\quad \epsilon \sim N(0,\quad 1 - \phi^2)\\$
+  $X_t = \phi X_{t-1} + \epsilon,\quad \epsilon \sim N(0,\quad 1 - \phi^2)$
   
   $X_0 \sim N(0,1)$
 
