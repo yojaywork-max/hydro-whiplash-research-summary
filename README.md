@@ -234,7 +234,7 @@ Since inter_period may also affect the counts of whiplash, for example shorter i
 
   - **Method 2(moving thresholds)**: 
 
-    Calculate whiplash with 40 years as a period and move 5 years one time. That is, this includes periods of 1850 ~ 1889, 1855 ~ 1894, 1860 ~ 1899, ... , 1960 ~ 1999. (in total 23 periods). This method tries to tackle with the climate change distributive change of precipitation, so it calculates whiplash on a moving basis.
+    Calculate whiplash with 40 years as a period and move 5 years one time. That is, this includes periods of 1850 ~ 1889, 1855 ~ 1894, 1860 ~ 1899, ... , 1960 ~ 1999. (in total 23 periods). This method tries to consider the climate change distributive changes of precipitations, so it calculates whiplash on a moving basis.
 
   >Note: Here, both methods have been revised to consider seasonal variability of thresholds. (See 3. Identify wet and dry extremes**)
 
