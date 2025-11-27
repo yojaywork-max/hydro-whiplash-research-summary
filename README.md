@@ -141,7 +141,7 @@ For example, $P_{2001,1}' = \frac{P_{2001,1} - \overline{P_1}}{\sigma_1}$, where
 - Analysis on future projection
   - We may also make future projections on whiplash using models with available data. However, there is one thing to ponder. Recall that before identifying whiplash, we find extremes first. **But in future scenarios where distributions of precipitations are most likely to change, is it reasonable to recognize extremes based on the thresholds that are calculated from current climate?** Alternatively, is there an better method?
 
-    To answer this question, we make use of a proposed idealized model to investigate the relationship between number of extremes and frequency of whiplash. See next section.
+    To answer this question, we proposed an idealized model to investigate the relationship between number of extremes and frequency of whiplash. See next section.
 
 ## An idealized model
 ### Motivation
@@ -214,9 +214,9 @@ Since inter_period may also affect the counts of whiplash, for example shorter i
 - When generating random time series, make it atuoregressive. So we can answer quesntion such as under different levels of memory, what is the expected whiplash frequency? And for each grid, find a way to estimate its level of memory to compare with this model.
 - Something to think about: Do we consider merging after generating(identifying) extreme in this model? If not, we are assuming extremes to be independent, and in this sense do we need to add this autoregressive propoerty? (need more reasoining)
 
-### Answering the question from last section
+### Answering the question from the previous section
 
-  可以畫圖證明用fixed thesholds所算出來的future whiplash可以被idealized model所預測。如此就會突顯使用moving threhsolds的重要性。
+  可以畫圖證明用fixed thesholds所算出來的future whiplash可以被idealized model所預測。如此就會突顯使用moving threhsolds的重要性。(也就是移除extremes trend的貢獻)
 
   In our study, what we want to shed light on is the latter factor, that is extremes getting closer. A way to analyze is to make sure the amount of extremes to be the same over the periods of study. 
 
@@ -225,7 +225,7 @@ Since inter_period may also affect the counts of whiplash, for example shorter i
   
 
 ## Data analysis of the 1pct CO2 increase per year models
-- Data: **151 years 1pct CO2 ESM**
+- Data: **CanESM 151 years 1pct CO2 increase per year**
 ### Methods of fixed or moving:
 
   - **Method 1 (fixed thresholds)**:
