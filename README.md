@@ -285,6 +285,10 @@ The code for identifying whiplash that follows is identical to the simple ideali
   | <img src="images/phi_0.png" height = "250"> | <img src="images/phi_05.png" height="250">| <img src="images/phi_09.png" height="250">|
   </div>
 
+  <div align="center">
+  <img src="images/p_phi.png" height = "250">
+  </div>
+
 ### Discussions: (TBU)
 
 ---
