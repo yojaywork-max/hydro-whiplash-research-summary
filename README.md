@@ -32,6 +32,9 @@ We will walk through the following sections:
 
   The above scenario may seem counterintuitive and illogical, but in a climatology point, it is assumed that we are used to the expected climate(precipitation) given the time of a year. This example of Wet-to-Dry scenario tells us that the water supply is higher but later lower than usual for the reserviors of that area, supposing other factors remain the same. Therefore, studying whiplash and its future trend in this climatology manner can be informative to those who are managing water resources.
 
+---
+---
+
 ## Tan's framework
 
 For a grid on the global map, we have the following four steps to identify the whiplah event on that grid. Abbbreviate precipitation as pr.
@@ -133,9 +136,21 @@ For example, $P_{2001,1}' = \frac{P_{2001,1} - \overline{P_1}}{\sigma_1}$, where
 
 
 ### Further studies
-- Characteristics of whiplash
-  - whiplash intensity
-  - timing & duration
+- More statistics of whiplash (future work. 在定義好whiplash的算法後再分析這些統計量)
+
+  Besides frequencies, we can also study various characteristics of whiplash, including
+
+  - Timing: defined as the starting season(month) of a whiplash.
+
+  - Duration: defined as the duration from first day of first extreme to the last day of second extreme of a whiplash.
+
+  - Transition: defined as the duration from the last day of first extreme to the first day of second extreme of a whiplash.
+
+  - Whiplash Intensity(WI): defined as the difference between the wettest and driest of a whiplash.
+
+  - Whiplash Intensity Slope (WIS): defined as WI divided by transition days. 
+    
+ 
 
 
 - Analysis on future projection
@@ -143,7 +158,10 @@ For example, $P_{2001,1}' = \frac{P_{2001,1} - \overline{P_1}}{\sigma_1}$, where
 
     To answer this question, we proposed an idealized model to investigate the relationship between number of extremes and frequency of whiplash. See next section.
 
-## An idealized model
+---
+---
+
+## Simple idealized model
 ### Motivation
 
 Now we study an idealized model to discuss the contributions of number of extremes on frequency of whiplash as well as the application of this idealized model. 
@@ -154,15 +172,15 @@ To quantify the contribution of the former factor, here we build an idealized mo
 ### Example code for counting Wet-to-Dry in the idealized model
 
   ```python
-  1  import numpy as np
-  2  p_wet, p_dry = 0.1, 0.1
-  3  n_total = 1500
-  4  n_wet = int( np.round(n_total*p_wet, 0))
-  5  n_dry = int( np.round(n_total*p_dry, 0))
-  6  n_non = n_total - n_wet - n_dry
-  7  Nums = np.array([1]*n_wet + [-1]*n_dry + [0]*n_non)
-  8
-  9  np.random.shuffle(Nums)                             # randomly shuffle
+   1  import numpy as np
+   2  p_wet, p_dry = 0.1, 0.1
+   3  n_total = 1500
+   4  n_wet = int( np.round(n_total*p_wet, 0))
+   5  n_dry = int( np.round(n_total*p_dry, 0))
+   6  n_non = n_total - n_wet - n_dry
+   7  Nums = np.array([1]*n_wet + [-1]*n_dry + [0]*n_non)
+   8
+   9  np.random.shuffle(Nums)                             # randomly shuffle
   10
   11  wet_i = np.where(Nums == 1)[0]
   12  dry_i = np.where(Nums == -1)[0]
@@ -209,11 +227,6 @@ Since inter_period may also affect the counts of whiplash, for example shorter i
 - Note that in this ideal scenario, no information of seasonals is added, so this ideal model is consistent with Tan's method of identifying extremes, which considers the anomalies of whole period. Another thing to note that is under no seasonal variability, the other method that we proposed is nearly equivalent to Tan's method. See **Tan's framework - 3. Identify wet and dry extremes**. 
 - This idealized model can also be used as a statistical test to check if extremes of both sides are significantly closer or is it the identified whiplash just a statistical result.
 
-
-### Adding autoregressive propoerty(future work)
-- When generating random time series, make it atuoregressive. So we can answer quesntion such as under different levels of memory, what is the expected whiplash frequency? And for each grid, find a way to estimate its level of memory to compare with this model.
-- Something to think about: Do we consider merging after generating(identifying) extreme in this model? If not, we are assuming extremes to be independent, and in this sense do we need to add this autoregressive propoerty? (need more reasoining)
-
 ### Answering the question from the previous section
 
   可以畫圖證明用fixed thesholds所算出來的future whiplash可以被idealized model所預測。如此就會突顯使用moving threhsolds的重要性。(也就是移除extremes trend的貢獻)
@@ -222,6 +235,60 @@ Since inter_period may also affect the counts of whiplash, for example shorter i
 
 ### Distinct proportions of extremes (possible future works)
 - So far we set the proportions of wets and dries to identically increase or decrease when concieving future scenarios. What are the behaviors of whiplash when the trends of numbers of extremes are distinct? （在這個分析在當p_wet = p_dry 對分析結果的解釋性不高時可以考慮做做看以加強我們強調moving threshold的重要性）
+
+##  Autoregressive Idealized Model
+- When generating random time series, make it atuoregressive. So we can answer question such as under different levels of memory, what is the expected whiplash frequency? And for each grid, find a way to estimate its level of memory to compare with this model.
+
+### AR(1) Model:
+    
+  $X_t = \phi X_{t-1} + \epsilon,\quad \epsilon \sim N(0,\quad 1 - \phi^2)\\$
+  
+  $X_0 \sim N(0,1)$
+
+  >Note: $\phi$ is the lag 1 autocorrelation and is given between 0 to 1 to represent the strength of memory of the time series. 
+  > - When $\phi = 0$, the model reduces to the imple idealized model above, which has no autocorrelation. 
+  > - When $\phi$ is close to 1, one can imagine that the extremes are clustering, and hence a smaller amount of whiplash.
+
+  >It is mathematically true that when $|\phi| < 1$, the time series is stationary. The variance of the noise $\epsilon$ is given as $1 - \phi^2$ such that  $X \sim N(0, 1)$.
+
+### Example code for generating AR(1) model and extremes
+
+```python
+ 1  n_total      = 1500
+ 2  phi          = 0.5         # lag 1 autocorrelation is 0.5, for example    
+ 3  sigma        = 1.0 * (1 - phi**2)**(1/2)    
+ 4  wet_q        = 0.9    
+ 5  dry_q        = 0.1    
+ 6  inter_period = 30    
+ 7
+ 8  np.random.seed(42)  
+ 9
+10  X = np.zeros(n_total)
+11
+12  for t in range(1, n_total):             # AR time series generation
+13      eps_t = np.random.normal(0, sigma)
+14      X[t] = phi * X[t-1] + eps_t
+15
+16  u_wet = np.quantile(X, 1 - wet_q)
+17  u_dry = np.quantile(X, dry_q)
+18
+19  Nums = np.zeros(n_total, dtype=int)
+20  Nums[X >= u_wet] = 1    # wet
+21  Nums[X <= u_dry] = -1   # dry
+```
+The code for identifying whiplash that follows is identical to the simple idealized model.
+### Results: (TBU)
+  <div>
+
+  | | | |
+  | --- | --- | --- |
+  | <img src="images/phi_0.png" height = "250"> | <img src="images/phi_05.png" height="250">| <img src="images/phi_09.png" height="250">|
+  </div>
+
+### Discussions: (TBU)
+
+---
+---
   
 
 ## Data analysis of the 1pct CO2 increase per year models
