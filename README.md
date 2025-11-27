@@ -36,6 +36,7 @@ We will walk through the following sections:
 
 For a grid on the global map, we have the following four steps to identify the whiplah event on that grid. Abbbreviate precipitation as pr.
 
+### Steps of Tan's method
 **1. Linearly detrend daily pr by annual sum, then calculate moving sum of detrended pr within 30 days**
 
 * Sum up the daily pr into annual pr, then fit a linear relationship y = ax + b, where y = annual pr  and x = year. For example, we use the pr data from 1979 to 2019, so we have 41 years of annual pr (y) that corresponds to each year (x).
@@ -93,89 +94,7 @@ For example, $P_{2001,1}' = \frac{P_{2001,1} - \overline{P_1}}{\sigma_1}$, where
 
   > **_Explanation of the code:_** For each independent wet event, if there exists a dry event where its first day is within inter_period days from the last day of the wet event, then identify this pair of wet and dry as a Wet-to-Dry. Note that we require every wet and dry in each Wet-to-Dry event to be unique, so line 5 and line 9 were written to avoid repetitive counting issue.
 
-## An idealized model
-
-Now we study an idealized model to discuss a proper method to analyze whiplash under climate change trending. Recall that to whiplash includes extremes and fast transition between extremes. An increase frequency in whiplash is resulted from two factors: **1. Increase amounts of extremes 2. Extremes on both side getting closer.**
-
-**Motivation**
-
-
-Probability speaking, if there are more extreme events on both sides during a fixed length of period, then there is certainly higher whiplash frequency. 
-
-What causes the extremes to increase?
-Under the background of climate change, distribution of variables like precipitation may change in different ways at different timescales. For example, mean of precipitation can increase or decrease; and the variation of precipitation can increase or decrease too. Note that a change in mean precipitation doesn't necessarily imply a change in variation, and vice versa. 
-
-When the variable variates larger than before, it logically follows that more extremes will be identified, and hence a higher whiplash frequency. 
-However, we argue that in our hydrological whiplash analysis, we want to avoid this increasing whiplash frequency that is contributed by the trending of precipitation. Otherwise, we may directly study the chnage of distribution of precipitation. 
-
-Instead, what we wish to shed light on is the extremes getting closer. A way to analyze is to make sure the amount of extremes to be the same over the period of study. Therefore, here we build an idealized model where proportions(amount) of extremes are given as one of the inputs. See the following subsections.
-
-**Example code for counting Wet-to-Dry in the idealized model**
-
-```python
- 1  import numpy as np
- 2  p_wet, p_dry = 0.1, 0.1
- 3  n_total = 1500
- 4  n_wet = int( np.round(n_total*p_wet, 0))
- 5  n_dry = int( np.round(n_total*p_dry, 0))
- 6  n_non = n_total - n_wet - n_dry
- 7  Nums = np.array([1]*n_wet + [-1]*n_dry + [0]*n_non)
- 8
- 9  np.random.shuffle(Nums)                             # randomly shuffle
-10
-11  wet_i = np.where(Nums == 1)[0]
-12  dry_i = np.where(Nums == -1)[0]
-13  inter_period = 5
-14
-15  WD = dict()         # wet: keys, dry: values
-16  for w in wet_i:
-17      for d in dry_i:
-18          if 0 < d - w <= inter_period:
-19              if d in list(WD.values()):              ## then we need to update new wet
-20                  w0 = list(WD)[-1]
-21                  del WD[w0]                          # to prevent repetetive couting wets
-22                  WD[w] = d
-23              else:                                   
-24                  WD[w] = d                           ## or directly stores whiplash
-25
-26              break                                   # to prevent repetetive couting dries
-27          if d-w > inter_period:
-28              break
-29 print('Wet-to-Dry frequency: ', len(WD) / n_total)
-```
-> **_Explanation of the code:_** This model assumes there are in total 1500 days and the upper and lower thresholds are given as 90% and 10%, so p_wet, meaning the proportion of wet extremes, is 1 - 90% = 0.1; and p_dry is 0.1 . Thus, there are 1500*0.1 = 150 wets and dries each. Next, we generate a time series contain those wets and dries, indexed as 1 and -1, with the rest being normal days (indexed as 0). Then we shuffle it to make the time series random. Lastly we start to calculate the whiplash events with a given inter_period. Note that for Dry-to-Wet whiplash, the logic for identification is same.
-
-
-**Results of the relationship of extreme proportions and inter_days on whiplash frequecy**
-
-To investigate the relationship of extreme event proportions and whiplash frequency, we run this idealized model with different values of p_wet and p_dry. Currently we take the p_wet and p_dry to be identical, assuming both extremes increase or decrease toghether at the same direction and rate.
-
-Since inter_period may also affect the counts of whiplash, for example shorter inter_period makes the whiplash frequency smaller, we also feed different values of inter_period into the model. For each p_wet, p_dry and inter_period, we run the model for 100 times and then average the 100 results to plot the following figure.
-
-
-  <div>
-
-  | | | 
-  | --- | --- |
-  | <img src="images/ideal_model_ip_plot.png" height = "350"> | <img src="images/ideal_model_fp_plot.png" height="350">|
-  </div>
-
-
-**Discussion**
-- Expected whiplash frequency is a function of inter_period. But when iner_period is longer than a certain days, which has a monotonic relationship to the inverse of p_wet/p_dry, whiplash frequency is unaffected by the choice of inter_period.
-- When we analyzing whiplash during a period with fixed thresholds, under the climate change trending, if there are +s% of extreme events on both sides, then there the whiplash frequency increases by s%.
-- Note that in this ideal scenario, no information of seasonals is added, so this ideal model is consistent with Tan's method of identifying extremes, which considers the anomalies of whole period. Another thing to note that is under no seasonal variability, the other method that we proposed is nearly equivalent to Tan's method. See **Tan's framework - 3. Identify wet and dry extremes**. 
-- This idealized model can also be used as a statistical test to check if extremes of both sides are significantly closer than being uniformly distributed. But agian note that this test makes sense  only for the method that identify extremes based on the whole period anomalies, see the discussion under **Tan's framework - 3. Identify wet and dry extremes**. 
-
-
-**Adding autoregressive propoerty(future work)**
-- When generating random time series, make it atuoregressive. So we can answer quesntion such as under different levels of memory, what is the expected whiplash frequency? And for each grid, find a way to estimate its level of memory to compare with this model.
-- Something to think about: Do we consider merging after generating(identifying) extreme in this model? If not, we are assuming extremes to be independent, and in this sense do we need to add this autoregressive propoerty? (need more reasoining)
-
-
-## Data analysis & results 
-
-### Reproduction of Tan's work with revision on identifying extremes**
+### Reproduction of Tan's work with revision on defining extremes
 
 - Data: **ERA5-land-only**
 
@@ -209,13 +128,105 @@ Since inter_period may also affect the counts of whiplash, for example shorter i
   <div>
  
 - annual precipitation trend vs. extremes trend vs. whiplash trend (TBU)
-   
+
+   這二組圖可以看annual pr trend 對extreme trend 貢獻、extreme trend對whiplash trend 貢獻
 
 
-### Analysis of 1pc CO2 increaase per year for 151 years using 1. fixed thresholds based on first 40 years and 2. thresholds calculated from a moving window of 40 years
+### Further studies
+- Characteristics of whiplash
+  - whiplash intensity
+  - timing & duration
 
+
+- Analysis on future projection
+  - We may also make future projections on whiplash using models with available data. However, there is one thing to ponder. Recall that before identifying whiplash, we find extremes first. **But in future scenarios where distributions of precipitations are most likely to change, is it reasonable to recognize extremes based on the thresholds that are calculated from current climate?** Alternatively, is there an better method?
+
+    To answer this question, we make use of a proposed idealized model to investigate the relationship between number of extremes and frequency of whiplash. See next section.
+
+## An idealized model
+### Motivation
+
+Now we study an idealized model to discuss the contributions of number of extremes on frequency of whiplash as well as the application of this idealized model. 
+Recall that a whiplash includes both extremes and fast transition between extremes. An increase frequency in whiplash can be resulted from two factors: **1. Increase amounts of extremes 2. Extremes on both side getting closer.**
+
+To quantify the contribution of the former factor, here we build an idealized model where proportions(amount) of extremes are given as one of the inputs. 
+
+### Example code for counting Wet-to-Dry in the idealized model
+
+  ```python
+  1  import numpy as np
+  2  p_wet, p_dry = 0.1, 0.1
+  3  n_total = 1500
+  4  n_wet = int( np.round(n_total*p_wet, 0))
+  5  n_dry = int( np.round(n_total*p_dry, 0))
+  6  n_non = n_total - n_wet - n_dry
+  7  Nums = np.array([1]*n_wet + [-1]*n_dry + [0]*n_non)
+  8
+  9  np.random.shuffle(Nums)                             # randomly shuffle
+  10
+  11  wet_i = np.where(Nums == 1)[0]
+  12  dry_i = np.where(Nums == -1)[0]
+  13  inter_period = 5
+  14
+  15  WD = dict()         # wet: keys, dry: values
+  16  for w in wet_i:
+  17      for d in dry_i:
+  18          if 0 < d - w <= inter_period:
+  19              if d in list(WD.values()):              ## then we need to update new wet
+  20                  w0 = list(WD)[-1]
+  21                  del WD[w0]                          # to prevent repetetive couting wets
+  22                  WD[w] = d
+  23              else:                                   
+  24                  WD[w] = d                           ## or directly stores whiplash
+  25
+  26              break                                   # to prevent repetetive couting dries
+  27          if d-w > inter_period:
+  28              break
+  29 print('Wet-to-Dry frequency: ', len(WD) / n_total)
+  ```
+  > **_Explanation of the code:_** This model assumes there are in total 1500 days and the upper and lower thresholds are given as 90% and 10%, so p_wet, meaning the proportion of wet extremes, is 1 - 90% = 0.1; and p_dry is 0.1 . Thus, there are 1500*0.1 = 150 wets and dries each. Next, we generate a time series contain those wets and dries, indexed as 1 and -1, with the rest being normal days (indexed as 0). Then we shuffle it to make the time series random. Lastly we start to calculate the whiplash events with a given inter_period. Note that for Dry-to-Wet whiplash, the logic for identification is same.
+
+
+
+### Results of the relationship of extreme proportions and inter_days on whiplash frequecy
+
+We run this idealized model with different values of p_wet and p_dry. Currently we take the p_wet and p_dry to be identical, assuming both extremes increase or decrease toghether at the same direction and rate.
+
+Since inter_period may also affect the counts of whiplash, for example shorter inter_period makes the whiplash frequency smaller, we also feed different values of inter_period into the model. For each p_wet, p_dry and inter_period, we run the model for 100 times and then average the 100 results to plot the following figure.
+
+
+  <div>
+
+  | | | 
+  | --- | --- |
+  | <img src="images/ideal_model_ip_plot.png" height = "350"> | <img src="images/ideal_model_fp_plot.png" height="350">|
+  </div>
+
+
+### Discussion
+- Expected whiplash frequency is a function of inter_period. But when iner_period is longer than a certain days, which has a monotonic relationship to the inverse of p_wet/p_dry, whiplash frequency is unaffected by the choice of inter_period.
+- As shown in the right figures above, when we are analyzing whiplash during a period with fixed thresholds, under the climate change trending, if there are +s% of extreme events on both sides, then there the total whiplash frequencies increase by s%.
+- Note that in this ideal scenario, no information of seasonals is added, so this ideal model is consistent with Tan's method of identifying extremes, which considers the anomalies of whole period. Another thing to note that is under no seasonal variability, the other method that we proposed is nearly equivalent to Tan's method. See **Tan's framework - 3. Identify wet and dry extremes**. 
+- This idealized model can also be used as a statistical test to check if extremes of both sides are significantly closer or is it the identified whiplash just a statistical result.
+
+
+### Adding autoregressive propoerty(future work)
+- When generating random time series, make it atuoregressive. So we can answer quesntion such as under different levels of memory, what is the expected whiplash frequency? And for each grid, find a way to estimate its level of memory to compare with this model.
+- Something to think about: Do we consider merging after generating(identifying) extreme in this model? If not, we are assuming extremes to be independent, and in this sense do we need to add this autoregressive propoerty? (need more reasoining)
+
+### Answering the question from last section
+
+  可以畫圖證明用fixed thesholds所算出來的future whiplash可以被idealized model所預測。如此就會突顯使用moving threhsolds的重要性。
+
+  In our study, what we want to shed light on is the latter factor, that is extremes getting closer. A way to analyze is to make sure the amount of extremes to be the same over the periods of study. 
+
+### Distinct proportions of extremes (possible future works)
+- So far we set the proportions of wets and dries to identically increase or decrease when concieving future scenarios. What are the behaviors of whiplash when the trends of numbers of extremes are distinct? （在這個分析在當p_wet = p_dry 對分析結果的解釋性不高時可以考慮做做看以加強我們強調moving threshold的重要性）
+  
+
+## Data analysis of the 1pct CO2 increase per year models
 - Data: **151 years 1pct CO2 ESM**
-- methods of fixed or moving:
+### Methods of fixed or moving:
 
   - **Method 1 (fixed thresholds)**:
 
@@ -228,7 +239,7 @@ Since inter_period may also affect the counts of whiplash, for example shorter i
   >Note: Here, both methods have been revised to consider seasonal variability of thresholds. (See 3. Identify wet and dry extremes**)
 
 
-- Results
+### Results
 
   - Method 1:
 
@@ -251,6 +262,6 @@ Since inter_period may also affect the counts of whiplash, for example shorter i
     </div>
 
 
-- Discussions:
+### Discussions:
   - Strong trend in Method 1
   - No trend in Method 2
